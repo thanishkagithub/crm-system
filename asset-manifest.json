@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/crm-system/static/css/main.92c8d4eb.css",
+    "main.js": "/crm-system/static/js/main.1ae06f6d.js",
+    "static/js/453.1c6812d5.chunk.js": "/crm-system/static/js/453.1c6812d5.chunk.js",
+    "index.html": "/crm-system/index.html",
+    "main.92c8d4eb.css.map": "/crm-system/static/css/main.92c8d4eb.css.map",
+    "main.1ae06f6d.js.map": "/crm-system/static/js/main.1ae06f6d.js.map",
+    "453.1c6812d5.chunk.js.map": "/crm-system/static/js/453.1c6812d5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.92c8d4eb.css",
+    "static/js/main.1ae06f6d.js"
+  ]
+}
