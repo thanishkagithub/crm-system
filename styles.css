@@ -4,11 +4,11 @@
   --bg-soft: #f9fafb;
   --card-bg: #ffffff;
   --card-text: #1f2937;
-  --accent: #8b5cf6;
-  --accent-soft: rgba(139, 92, 246, 0.15);
-  --accent-strong: #7c3aed;
-  --purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-  --purple-light: #a78bfa;
+  --accent: #3b82f6;
+  --accent-soft: rgba(59, 130, 246, 0.15);
+  --accent-strong: #2563eb;
+  --purple-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --purple-light: #60a5fa;
   --border-subtle: #e5e7eb;
   --text: #1f2937;
   --text-soft: #6b7280;
@@ -32,10 +32,10 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Segoe UI", sans-serif;
-  background: #f5f5f5;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
 
 .app-shell {
@@ -92,7 +92,7 @@ body {
 .nav-item.active {
   background: var(--purple-gradient);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .main {
@@ -135,6 +135,66 @@ body {
   gap: 0.75rem;
 }
 
+/* User info bar */
+.user-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.35rem;
+  background: var(--blue-50, #eff6ff);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--purple-gradient);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.user-name {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.user-role-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(37,99,235,0.1);
+  color: var(--accent-strong);
+  width: fit-content;
+}
+
+.user-role-badge.role-user {
+  background: rgba(107,114,128,0.12);
+  color: var(--text-soft);
+}
+
+.user-role-badge.role-manager {
+  background: rgba(234,179,8,0.15);
+  color: #d97706;
+}
+
 .btn-logout-purple {
   display: inline-flex;
   align-items: center;
@@ -148,12 +208,12 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .btn-logout-purple:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 .btn-logout-purple:active {
@@ -182,6 +242,12 @@ body {
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-soft);
   margin-bottom: 1.5rem;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  min-width: 0;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .card h2,
@@ -231,6 +297,7 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   gap: 1.25rem;
+  align-items: flex-start;
 }
 
 .table {
@@ -442,7 +509,7 @@ textarea {
 .subnav-item.subnav-active {
   background: var(--purple-gradient);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .subview {
@@ -804,7 +871,7 @@ select.task-input[name="priority"]:focus {
 .project-textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .project-textarea {
@@ -846,7 +913,7 @@ select.task-input[name="priority"]:focus {
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -854,7 +921,7 @@ select.task-input[name="priority"]:focus {
 
 .btn-create-project:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 .btn-create-project:active {
@@ -898,8 +965,9 @@ select.task-input[name="priority"]:focus {
 }
 
 .projects-table thead {
-  background: var(--purple-gradient);
-  color: #ffffff;
+  background: #f9fafb;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .projects-table thead th {
@@ -946,7 +1014,7 @@ select.task-input[name="priority"]:focus {
 
 .table-action-btn--view:hover {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .table-action-btn--delete {
@@ -1020,12 +1088,12 @@ select.task-input[name="priority"]:focus {
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .btn-sales-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 .btn-sales-secondary {
@@ -1060,8 +1128,64 @@ select.task-input[name="priority"]:focus {
 
 .sales-form-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.sales-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-soft);
+}
+
+.sales-input,
+.sales-textarea,
+.sales-select {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  color: var(--text);
+  transition: all var(--transition-fast);
+  width: 100%;
+  font-family: inherit;
+}
+
+.sales-input:focus,
+.sales-textarea:focus,
+.sales-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: #ffffff;
+}
+
+.sales-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.sales-label-full {
+  grid-column: 1 / -1;
+}
+
+.sales-label-2 {
+  grid-column: span 2;
+}
+
+.sales-label-4 {
+  grid-column: span 4;
+}
+
+
+.sales-row-separator {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .sales-form-actions {

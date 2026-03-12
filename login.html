@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRMM – Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="login-wrapper">
+
+    <!-- Left Panel: Brand Hero -->
+    <div class="hero-panel">
+      <div class="hero-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-logo">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <rect width="48" height="48" rx="14" fill="rgba(255,255,255,0.15)"/>
+            <path d="M12 16h24v3H12zM12 22.5h18v3H12zM12 29h24v3H12z" fill="white"/>
+            <circle cx="36" cy="34" r="6" fill="#60a5fa"/>
+            <path d="M33 34l2 2 3-3.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="hero-title">CRMM</h1>
+        <p class="hero-subtitle">Operations & Department Dashboard</p>
+        <div class="hero-features">
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Manage projects, tasks & teams</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Full sales & accounts pipeline</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Real-time department analytics</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <span>Works offline with local storage</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-footer">
+        Sangria IT Solutions &copy; 2026
+      </div>
+    </div>
+
+    <!-- Right Panel: Login Form -->
+    <div class="form-panel">
+      <div class="form-card">
+        <div class="form-header">
+          <div class="form-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="9" r="5" fill="#3b82f6"/>
+              <path d="M4 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h2 class="form-title">Welcome back</h2>
+          <p class="form-subtitle">Sign in to your CRM account</p>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="field-group">
+            <label class="field-label" for="username">Username</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <circle cx="9" cy="6" r="3.5" stroke="#9ca3af" stroke-width="1.5"/>
+                <path d="M2.5 16c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <input
+                id="username"
+                type="text"
+                class="field-input"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="password">Password</label>
+            <div class="field-input-wrap">
+              <svg class="field-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="3" y="9" width="12" height="7" rx="2" stroke="#9ca3af" stroke-width="1.5"/>
+                <path d="M6 9V6a3 3 0 016 0v3" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              <input
+                id="password"
+                type="password"
+                class="field-input"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+              />
+              <button type="button" class="toggle-pw" id="toggle-pw" title="Show/hide password">
+                <svg id="eye-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M1 9s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" stroke="#9ca3af" stroke-width="1.5"/>
+                  <circle cx="9" cy="9" r="2.5" stroke="#9ca3af" stroke-width="1.5"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Error Message -->
+          <div class="error-banner" id="error-banner" hidden>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="7" stroke="#ef4444" stroke-width="1.5"/>
+              <path d="M8 5v3.5M8 11v.5" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span id="error-text">Invalid username or password.</span>
+          </div>
+
+          <button type="submit" class="btn-signin" id="btn-signin">
+            <span class="btn-text">Sign In</span>
+            <div class="btn-spinner" id="btn-spinner" hidden>
+              <div class="spinner"></div>
+            </div>
+            <svg class="btn-arrow" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M3 9h12M11 5l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

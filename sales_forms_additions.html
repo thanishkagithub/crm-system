@@ -11,44 +11,45 @@
             </div>
         </div>
         <form id="form-invoice" class="sales-form-grid">
-            <label>
+            <label class="sales-label">
                 Customer *
-                <select name="customerId" id="select-invoice-customer" required>
+                <select name="customerId" id="select-invoice-customer" class="sales-select" required>
                     <option value="">Select customer</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Invoice #
-                <input type="text" name="invoiceNumber" placeholder="INV-0001" required />
+                <input type="text" name="invoiceNumber" class="sales-input" placeholder="INV-0001" required />
             </label>
-            <label>
+            <label class="sales-label">
                 Reference #
-                <input type="text" name="referenceNumber" />
+                <input type="text" name="referenceNumber" class="sales-input" />
             </label>
-            <label>
+            <label class="sales-label">
                 Invoice Date *
-                <input type="date" name="invoiceDate" required />
+                <input type="date" name="invoiceDate" class="sales-input" required />
             </label>
-            <label>
+            <label class="sales-label">
                 Due Date
-                <input type="date" name="dueDate" />
+                <input type="date" name="dueDate" class="sales-input" />
             </label>
-            <label>
+            <label class="sales-label">
                 Status
-                <select name="status">
+                <select name="status" class="sales-select">
                     <option value="Draft">Draft</option>
                     <option value="Sent">Sent</option>
                     <option value="Paid">Paid</option>
                     <option value="Overdue">Overdue</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Amount (₹) *
-                <input type="number" name="amount" min="0" step="0.01" placeholder="0.00" required />
+                <input type="number" name="amount" class="sales-input" min="0" step="0.01" placeholder="0.00"
+                    required />
             </label>
-            <label style="grid-column: 1 / -1;">
+            <label class="sales-label sales-label-full">
                 Notes
-                <textarea name="notes" rows="3" placeholder="Invoice notes"></textarea>
+                <textarea name="notes" class="sales-textarea" rows="3" placeholder="Invoice notes"></textarea>
             </label>
             <div class="sales-form-actions">
                 <button type="submit" class="btn-sales-primary">
@@ -99,33 +100,34 @@
             </div>
         </div>
         <form id="form-payment" class="sales-form-grid">
-            <label>
+            <label class="sales-label">
                 Customer *
-                <select name="customerId" id="select-payment-customer" required>
+                <select name="customerId" id="select-payment-customer" class="sales-select" required>
                     <option value="">Select customer</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Invoice
-                <select name="invoiceId" id="select-payment-invoice">
+                <select name="invoiceId" id="select-payment-invoice" class="sales-select">
                     <option value="">Select invoice</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Payment #
-                <input type="text" name="paymentNumber" placeholder="PAY-0001" required />
+                <input type="text" name="paymentNumber" class="sales-input" placeholder="PAY-0001" required />
             </label>
-            <label>
+            <label class="sales-label">
                 Payment Date *
-                <input type="date" name="paymentDate" required />
+                <input type="date" name="paymentDate" class="sales-input" required />
             </label>
-            <label>
+            <label class="sales-label">
                 Amount (₹) *
-                <input type="number" name="amount" min="0" step="0.01" placeholder="0.00" required />
+                <input type="number" name="amount" class="sales-input" min="0" step="0.01" placeholder="0.00"
+                    required />
             </label>
-            <label>
+            <label class="sales-label">
                 Payment Mode
-                <select name="paymentMode">
+                <select name="paymentMode" class="sales-select">
                     <option value="Cash">Cash</option>
                     <option value="Bank Transfer">Bank Transfer</option>
                     <option value="Credit Card">Credit Card</option>
@@ -133,9 +135,9 @@
                     <option value="Cheque">Cheque</option>
                 </select>
             </label>
-            <label style="grid-column: 1 / -1;">
+            <label class="sales-label sales-label-full">
                 Notes
-                <textarea name="notes" rows="3" placeholder="Payment notes"></textarea>
+                <textarea name="notes" class="sales-textarea" rows="3" placeholder="Payment notes"></textarea>
             </label>
             <div class="sales-form-actions">
                 <button type="submit" class="btn-sales-primary">
@@ -186,48 +188,49 @@
             </div>
         </div>
         <form id="form-recurring-invoice" class="sales-form-grid">
-            <label>
+            <label class="sales-label">
                 Customer *
-                <select name="customerId" id="select-recurring-customer" required>
+                <select name="customerId" id="select-recurring-customer" class="sales-select" required>
                     <option value="">Select customer</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Profile Name *
-                <input type="text" name="profileName" placeholder="Monthly Subscription" required />
+                <input type="text" name="profileName" class="sales-input" placeholder="Monthly Subscription" required />
             </label>
-            <label>
+            <label class="sales-label">
                 Frequency
-                <select name="frequency">
+                <select name="frequency" class="sales-select">
                     <option value="Weekly">Weekly</option>
                     <option value="Monthly">Monthly</option>
                     <option value="Quarterly">Quarterly</option>
                     <option value="Yearly">Yearly</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Start Date *
-                <input type="date" name="startDate" required />
+                <input type="date" name="startDate" class="sales-input" required />
             </label>
-            <label>
+            <label class="sales-label">
                 End Date
-                <input type="date" name="endDate" />
+                <input type="date" name="endDate" class="sales-input" />
             </label>
-            <label>
+            <label class="sales-label">
                 Status
-                <select name="status">
+                <select name="status" class="sales-select">
                     <option value="Active">Active</option>
                     <option value="Paused">Paused</option>
                     <option value="Stopped">Stopped</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Amount (₹) *
-                <input type="number" name="amount" min="0" step="0.01" placeholder="0.00" required />
+                <input type="number" name="amount" class="sales-input" min="0" step="0.01" placeholder="0.00"
+                    required />
             </label>
-            <label style="grid-column: 1 / -1;">
+            <label class="sales-label sales-label-full">
                 Notes
-                <textarea name="notes" rows="3" placeholder="Recurring invoice notes"></textarea>
+                <textarea name="notes" class="sales-textarea" rows="3" placeholder="Recurring invoice notes"></textarea>
             </label>
             <div class="sales-form-actions">
                 <button type="submit" class="btn-sales-primary">
@@ -278,43 +281,44 @@
             </div>
         </div>
         <form id="form-credit-note" class="sales-form-grid">
-            <label>
+            <label class="sales-label">
                 Customer *
-                <select name="customerId" id="select-credit-note-customer" required>
+                <select name="customerId" id="select-credit-note-customer" class="sales-select" required>
                     <option value="">Select customer</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Credit Note #
-                <input type="text" name="creditNoteNumber" placeholder="CN-0001" required />
+                <input type="text" name="creditNoteNumber" class="sales-input" placeholder="CN-0001" required />
             </label>
-            <label>
+            <label class="sales-label">
                 Reference #
-                <input type="text" name="referenceNumber" />
+                <input type="text" name="referenceNumber" class="sales-input" />
             </label>
-            <label>
+            <label class="sales-label">
                 Credit Note Date *
-                <input type="date" name="creditNoteDate" required />
+                <input type="date" name="creditNoteDate" class="sales-input" required />
             </label>
-            <label>
+            <label class="sales-label">
                 Status
-                <select name="status">
+                <select name="status" class="sales-select">
                     <option value="Open">Open</option>
                     <option value="Closed">Closed</option>
                     <option value="Refunded">Refunded</option>
                 </select>
             </label>
-            <label>
+            <label class="sales-label">
                 Amount (₹) *
-                <input type="number" name="amount" min="0" step="0.01" placeholder="0.00" required />
+                <input type="number" name="amount" class="sales-input" min="0" step="0.01" placeholder="0.00"
+                    required />
             </label>
-            <label style="grid-column: 1 / -1;">
+            <label class="sales-label sales-label-full">
                 Reason
-                <textarea name="reason" rows="2" placeholder="Reason for credit note"></textarea>
+                <textarea name="reason" class="sales-textarea" rows="2" placeholder="Reason for credit note"></textarea>
             </label>
-            <label style="grid-column: 1 / -1;">
+            <label class="sales-label sales-label-full">
                 Notes
-                <textarea name="notes" rows="2" placeholder="Additional notes"></textarea>
+                <textarea name="notes" class="sales-textarea" rows="2" placeholder="Additional notes"></textarea>
             </label>
             <div class="sales-form-actions">
                 <button type="submit" class="btn-sales-primary">

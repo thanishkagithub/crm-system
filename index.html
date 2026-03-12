@@ -3,17 +3,39 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>CRMM - Operations & Department Dashboard</title>
+  <title>CRMM - Operations &amp; Department Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Auth Guard: redirect to login if no session -->
+  <script>
+    (function() {
+      try {
+        var session = JSON.parse(localStorage.getItem('crmm_session'));
+        if (!session || !session.username) {
+          window.location.replace('login.html');
+        }
+      } catch(e) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
 </head>
 
 <body>
   <div class="app-shell">
     <aside class="sidebar">
       <nav class="main-nav">
-        <button class="nav-item active" data-view="operations">
+        <button class="nav-item active" data-view="dashboard">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M2 2h6v6H2V2zm1 1v4h4V3H3zm7-1h6v6h-6V2zm1 1v4h4V3h-4zM2 10h6v6H2v-6zm1 1v4h4v-4H3zm7-1h6v6h-6v-6zm1 1v4h4v-4h-4z" fill="currentColor" />
+          </svg>
+          Master Dashboard
+        </button>
+        <button class="nav-item" data-view="operations">
           <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M3 3h14v14H3V3zm1 1v12h12V4H4z" fill="currentColor" />
             <path d="M6 6h8v1H6V6zm0 3h8v1H6V9zm0 3h5v1H6v-1z" fill="currentColor" />
@@ -66,10 +88,17 @@
           <h1 class="dashboard-title">CRM Dashboard</h1>
         </div>
         <div class="topbar-right">
+          <div class="user-info-bar" id="user-info-bar">
+            <div class="user-avatar" id="user-avatar">A</div>
+            <div class="user-details">
+              <span class="user-name" id="topbar-username">Admin</span>
+              <span class="user-role-badge" id="topbar-role-badge">Admin</span>
+            </div>
+          </div>
           <button id="btn-logout" class="btn-logout-purple">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" />
+              <path d="M11 10l3-3-3-3M14 7H5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 13H3a1 1 0 01-1-1V4a1 1 0 011-1h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
             </svg>
             Logout
           </button>
@@ -95,6 +124,21 @@
             <div class="card kpi-card">
               <h3>On‑time Completion %</h3>
               <p class="kpi-value" id="kpi-on-time">0%</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Active Campaigns</h3>
+              <p class="kpi-value" id="admin-active-campaigns">0</p>
+              <p class="muted small">Marketing</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Open Tickets</h3>
+              <p class="kpi-value" id="admin-open-tickets">0</p>
+              <p class="muted small">Client Service</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Total Employees</h3>
+              <p class="kpi-value" id="admin-total-employees">0</p>
+              <p class="muted small">HR</p>
             </div>
           </div>
 
@@ -129,28 +173,110 @@
               <ul class="activity-list" id="activity-log"></ul>
             </div>
           </div>
+
+          <div class="card" style="margin-top: 1.5rem;">
+            <div class="sales-card-header">
+               <div>
+                  <h3>Team Overview</h3>
+                  <p class="muted small">Performance metrics for each team member.</p>
+               </div>
+            </div>
+            <table class="table" id="table-admin-team">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Role</th>
+                     <th>Department</th>
+                     <th>Assignments</th>
+                     <th>Completed</th>
+                     <th>On-time %</th>
+                  </tr>
+               </thead>
+               <tbody></tbody>
+            </table>
+          </div>
         </section>
 
         <!-- Department screens backed by live data -->
         <section id="view-marketing" class="view">
-          <div class="card">
-            <h2>Marketing</h2>
-            <p class="muted">
-              Live view of marketing projects and tasks from Operations. Any
-              Marketing project you add in Operations will appear here.
-            </p>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Project</th>
-                  <th>Type</th>
-                  <th>Total Tasks</th>
-                  <th>Open</th>
-                  <th>Completed</th>
-                </tr>
-              </thead>
-              <tbody id="marketing-body"></tbody>
-            </table>
+          <div class="cards-grid">
+            <div class="card kpi-card">
+              <h3>Active Campaigns</h3>
+              <p class="kpi-value" id="kpi-marketing-campaigns">0</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Total Leads Generated</h3>
+              <p class="kpi-value" id="kpi-marketing-leads">0</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Avg Conversion Rate</h3>
+              <p class="kpi-value" id="kpi-marketing-conversion">0%</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Budget Utilized</h3>
+              <p class="kpi-value" id="kpi-marketing-budget">₹0</p>
+            </div>
+          </div>
+
+          <div class="two-column">
+            <div class="card">
+              <div class="sales-card-header">
+                <div>
+                  <h3>All Campaigns</h3>
+                  <p class="muted small">List of all active and past marketing campaigns.</p>
+                </div>
+              </div>
+              <table class="table sales-table" id="table-marketing-campaigns">
+                <thead>
+                  <tr>
+                    <th>Campaign Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Leads</th>
+                    <th>Budget</th>
+                  </tr>
+                </thead>
+                <tbody id="marketing-body"></tbody>
+              </table>
+            </div>
+
+            <div class="card">
+              <h3>Create New Campaign</h3>
+              <form id="form-marketing-campaign" class="sales-form-grid">
+                <label class="sales-label">
+                  Campaign Name *
+                  <input id="marketing-campaign-name" class="sales-input" type="text" name="name" placeholder="Summer Sale 2026" required />
+                </label>
+                <label class="sales-label">
+                  Type *
+                  <select name="type" class="sales-select" required>
+                    <option value="Email">Email Marketing</option>
+                    <option value="Social Media">Social Media</option>
+                    <option value="SEO">SEO / Content</option>
+                    <option value="Paid Ads">Paid Advertising</option>
+                    <option value="Event">Event / Webinar</option>
+                  </select>
+                </label>
+                <label class="sales-label">
+                  Status
+                  <select name="status" class="sales-select">
+                    <option value="Active">Active</option>
+                    <option value="Planned">Planned</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Paused">Paused</option>
+                  </select>
+                </label>
+                <label class="sales-label">
+                  Budget (₹)
+                  <input type="number" class="sales-input" name="budget" min="0" step="1000" placeholder="10000" />
+                </label>
+                
+                <div class="sales-form-actions" style="grid-column: 1 / -1;">
+                  <button type="submit" class="btn-sales-primary">Save Campaign</button>
+                  <button type="button" class="btn-sales-secondary" onclick="document.getElementById('form-marketing-campaign').reset();">Cancel</button>
+                </div>
+              </form>
+            </div>
           </div>
         </section>
 
@@ -187,6 +313,9 @@
             <button class="subnav-item" data-sales-subview="sales-credit-notes">
               Credit Notes
             </button>
+            <button class="subnav-item" data-sales-subview="sales-templates" id="btn-templates-nav">
+              Templates
+            </button>
           </div>
 
           <!-- Sales - Customers -->
@@ -205,47 +334,68 @@
                   + New
                 </button>
               </div>
-              <table class="table sales-table" id="table-sales-customers">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Company</th>
-                    <th>Email</th>
-                    <th>Work Phone</th>
-                    <th>Receivables</th>
-                    <th>Unused Credits</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+              <div style="overflow-x: auto;">
+                <table class="table sales-table" id="table-sales-customers">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Company</th>
+                      <th>Email</th>
+                      <th>Work Phone</th>
+                      <th>Address</th>
+                      <th>GST Number</th>
+                      <th>Receivables</th>
+                      <th>Unused Credits</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
             </div>
 
             <div class="card">
               <h3>Create / Edit Customer</h3>
               <form id="form-sales-customer" class="sales-form-grid">
-                <label>
+                <label class="sales-label sales-label-2">
                   Customer Name *
-                  <input id="sales-customer-name" type="text" name="name" placeholder="John Smith" required />
+                  <input id="sales-customer-name" class="sales-input" type="text" name="name" placeholder="John Smith"
+                    required />
                 </label>
-                <label>
+                <label class="sales-label sales-label-2">
                   Company Name
-                  <input type="text" name="company" placeholder="Acme Corporation" />
+                  <input type="text" class="sales-input" name="company" placeholder="Acme Corporation" />
                 </label>
-                <label>
+                <label class="sales-label sales-label-2">
                   Email
-                  <input type="email" name="email" placeholder="customer@example.com" />
+                  <input type="email" class="sales-input" name="email" placeholder="customer@example.com" />
                 </label>
-                <label>
+                <label class="sales-label sales-label-2">
                   Work Phone
-                  <input type="tel" name="phone" placeholder="+1 555 000 0000" />
+                  <input type="tel" class="sales-input" name="phone" placeholder="+1 555 000 0000" />
                 </label>
-                <label>
+
+                <label class="sales-label sales-label-2">
+                  GST Number
+                  <input type="text" class="sales-input" name="gstNumber" placeholder="22AAAAA0000A1Z5" />
+                </label>
+                <label class="sales-label">
                   Receivables (₹)
-                  <input type="number" name="receivables" min="0" step="0.01" placeholder="0.00" />
+                  <input type="number" class="sales-input" name="receivables" min="0" step="0.01" placeholder="0.00" />
                 </label>
-                <label>
+                <label class="sales-label">
                   Unused Credits (₹)
-                  <input type="number" name="credits" min="0" step="0.01" placeholder="0.00" />
+                  <input type="number" class="sales-input" name="credits" min="0" step="0.01" placeholder="0.00" />
+                </label>
+
+                <label class="sales-label sales-label-2">
+                  Billing Address
+                  <textarea name="billingAddress" class="sales-textarea" rows="2"
+                    placeholder="Enter billing address"></textarea>
+                </label>
+                <label class="sales-label sales-label-2">
+                  Shipping Address
+                  <textarea name="shippingAddress" class="sales-textarea" rows="2"
+                    placeholder="Enter shipping address"></textarea>
                 </label>
                 <div class="sales-form-actions">
                   <button type="submit" class="btn-sales-primary">
@@ -273,65 +423,82 @@
                 </div>
               </div>
               <form id="form-sales-estimate" class="estimate-form-grid">
-                <label class="estimate-label">
+                <label class="sales-label">
                   Customer *
-                  <select name="customerId" id="select-estimate-customer" required>
+                  <select name="customerId" id="select-estimate-customer" class="sales-select" required>
                     <option value="">Select customer</option>
                   </select>
                 </label>
-                <label class="estimate-label">
+                <label class="sales-label">
                   Estimate #
-                  <input type="text" name="estimateNumber" placeholder="EST-0001" />
+                  <input type="text" name="estimateNumber" class="sales-input" placeholder="EST-0001" />
                 </label>
-                <label class="estimate-label">
+                <label class="sales-label">
                   Reference #
-                  <input type="text" name="referenceNumber" />
+                  <input type="text" name="referenceNumber" class="sales-input" />
                 </label>
-                <label class="estimate-label">
+                <label class="sales-label">
                   Estimate Date *
-                  <input type="date" name="estimateDate" required />
+                  <input type="date" name="estimateDate" class="sales-input" required />
                 </label>
-                <label class="estimate-label">
+                <label class="sales-label">
                   Expiry Date
-                  <input type="date" name="expiryDate" />
+                  <input type="date" name="expiryDate" class="sales-input" />
                 </label>
-                <label class="estimate-label">
+                <label class="sales-label">
                   Currency
-                  <select name="currency">
+                  <select name="currency" class="sales-select">
                     <option value="INR">INR</option>
                     <option value="USD">USD</option>
                     <option value="EUR">EUR</option>
                   </select>
                 </label>
 
+                <div class="sales-label sales-label-full" style="margin-top: 1rem;">
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <h4 style="margin: 0;">Item Details</h4>
+                    <div style="display: flex; gap: 0.5rem;">
+                      <select id="select-template-for-estimate"
+                        style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="">-- Select Template --</option>
+                      </select>
+                      <button type="button" class="btn-sales-secondary btn-sales-small" id="btn-use-template">
+                        Use Template
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="estimate-items-card estimate-label-full">
                   <div class="estimate-items-header">
                     <h4>Item Table</h4>
-                    <button type="button" class="btn-sales-secondary btn-sales-small" disabled
-                      title="Multiple line items can be added in a future version">
+                    <button type="button" class="btn-sales-secondary btn-sales-small" id="btn-add-estimate-row">
                       + Add New Row
                     </button>
                   </div>
                   <div class="estimate-items-grid">
-                    <label>
+                    <label class="sales-label">
                       Item Details
-                      <input type="text" name="itemDescription" placeholder="Type or click to select an item" />
+                      <input type="text" name="itemDescription" class="sales-input"
+                        placeholder="Type or click to select an item" />
                     </label>
-                    <label>
+                    <label class="sales-label">
                       Quantity
-                      <input type="number" name="quantity" min="1" step="1" value="1" />
+                      <input type="number" name="quantity" class="sales-input" min="1" step="1" value="1" />
                     </label>
-                    <label>
+                    <label class="sales-label">
                       Rate
-                      <input type="number" name="rate" min="0" step="0.01" placeholder="0.00" />
+                      <input type="number" name="rate" class="sales-input" min="0" step="0.01" placeholder="0.00" />
                     </label>
-                    <label>
+                    <label class="sales-label">
                       Discount (%)
-                      <input type="number" name="discount" min="0" max="100" step="0.01" value="0" />
+                      <input type="number" name="discount" class="sales-input" min="0" max="100" step="0.01"
+                        value="0" />
                     </label>
-                    <label>
+                    <label class="sales-label">
                       Tax (%)
-                      <input type="number" name="tax" min="0" max="100" step="0.01" value="0" />
+                      <input type="number" name="tax" class="sales-input" min="0" max="100" step="0.01" value="0" />
                     </label>
                   </div>
                   <div class="estimate-summary-row">
@@ -344,13 +511,14 @@
                   </div>
                 </div>
 
-                <label class="estimate-label estimate-label-full">
+                <label class="sales-label sales-label-full">
                   Customer Notes
-                  <textarea name="customerNotes" rows="3" placeholder="Notes visible on the estimate"></textarea>
+                  <textarea name="customerNotes" class="sales-textarea" rows="3"
+                    placeholder="Notes visible on the estimate"></textarea>
                 </label>
-                <label class="estimate-label estimate-label-full">
-                  Terms &amp; Conditions
-                  <textarea name="terms" rows="3"
+                <label class="sales-label sales-label-full">
+                  Terms & Conditions
+                  <textarea name="terms" class="sales-textarea" rows="3"
                     placeholder="Enter the terms and conditions of your business"></textarea>
                 </label>
 
@@ -402,31 +570,31 @@
                 </div>
               </div>
               <form id="form-sales-order" class="sales-form-grid">
-                <label>
+                <label class="sales-label">
                   Customer *
-                  <select name="customerId" id="select-order-customer" required>
+                  <select name="customerId" id="select-order-customer" class="sales-select" required>
                     <option value="">Select customer</option>
                   </select>
                 </label>
-                <label>
+                <label class="sales-label">
                   Order #
-                  <input type="text" name="orderNumber" placeholder="SO-0001" required />
+                  <input type="text" name="orderNumber" class="sales-input" placeholder="SO-0001" required />
                 </label>
-                <label>
+                <label class="sales-label">
                   Reference #
-                  <input type="text" name="referenceNumber" />
+                  <input type="text" name="referenceNumber" class="sales-input" />
                 </label>
-                <label>
+                <label class="sales-label">
                   Order Date *
-                  <input type="date" name="orderDate" required />
+                  <input type="date" name="orderDate" class="sales-input" required />
                 </label>
-                <label>
+                <label class="sales-label">
                   Delivery Date
-                  <input type="date" name="deliveryDate" />
+                  <input type="date" name="deliveryDate" class="sales-input" />
                 </label>
-                <label>
+                <label class="sales-label">
                   Status
-                  <select name="status">
+                  <select name="status" class="sales-select">
                     <option value="Draft">Draft</option>
                     <option value="Confirmed">Confirmed</option>
                     <option value="Processing">Processing</option>
@@ -434,13 +602,14 @@
                     <option value="Delivered">Delivered</option>
                   </select>
                 </label>
-                <label>
+                <label class="sales-label">
                   Amount (₹) *
-                  <input type="number" name="amount" min="0" step="0.01" placeholder="0.00" required />
+                  <input type="number" name="amount" class="sales-input" min="0" step="0.01" placeholder="0.00"
+                    required />
                 </label>
-                <label style="grid-column: 1 / -1;">
+                <label class="sales-label sales-label-full">
                   Notes
-                  <textarea name="notes" rows="3" placeholder="Order notes"></textarea>
+                  <textarea name="notes" class="sales-textarea" rows="3" placeholder="Order notes"></textarea>
                 </label>
                 <div class="sales-form-actions">
                   <button type="submit" class="btn-sales-primary">
@@ -490,39 +659,39 @@
                 </div>
               </div>
               <form id="form-delivery-challan" class="sales-form-grid">
-                <label>
+                <label class="sales-label">
                   Customer *
-                  <select name="customerId" id="select-challan-customer" required>
+                  <select name="customerId" id="select-challan-customer" class="sales-select" required>
                     <option value="">Select customer</option>
                   </select>
                 </label>
-                <label>
+                <label class="sales-label">
                   Challan #
-                  <input type="text" name="challanNumber" placeholder="DC-0001" required />
+                  <input type="text" name="challanNumber" class="sales-input" placeholder="DC-0001" required />
                 </label>
-                <label>
+                <label class="sales-label">
                   Challan Date *
-                  <input type="date" name="challanDate" required />
+                  <input type="date" name="challanDate" class="sales-input" required />
                 </label>
-                <label>
+                <label class="sales-label">
                   Delivery Date
-                  <input type="date" name="deliveryDate" />
+                  <input type="date" name="deliveryDate" class="sales-input" />
                 </label>
-                <label>
+                <label class="sales-label">
                   Status
-                  <select name="status">
+                  <select name="status" class="sales-select">
                     <option value="Pending">Pending</option>
                     <option value="In Transit">In Transit</option>
                     <option value="Delivered">Delivered</option>
                   </select>
                 </label>
-                <label>
+                <label class="sales-label">
                   Number of Items *
-                  <input type="number" name="items" min="0" step="1" placeholder="0" required />
+                  <input type="number" name="items" class="sales-input" min="0" step="1" placeholder="0" required />
                 </label>
-                <label style="grid-column: 1 / -1;">
+                <label class="sales-label sales-label-full">
                   Notes
-                  <textarea name="notes" rows="3" placeholder="Delivery notes"></textarea>
+                  <textarea name="notes" class="sales-textarea" rows="3" placeholder="Delivery notes"></textarea>
                 </label>
                 <div class="sales-form-actions">
                   <button type="submit" class="btn-sales-primary">
@@ -904,6 +1073,151 @@
                     <th>Customer</th>
                     <th>Status</th>
                     <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Sales - Templates (Admin Only) -->
+          <div id="sales-templates" class="sales-subview two-column">
+            <div class="card">
+              <div class="sales-card-header">
+                <div>
+                  <h3>Our Video Services - Template Management</h3>
+                  <p class="muted small">
+                    Create and manage service templates for quick estimate generation. Choose from our comprehensive
+                    video production services.
+                  </p>
+                </div>
+              </div>
+              <form id="form-template" class="sales-form-grid">
+                <label>
+                  Template Name *
+                  <input type="text" name="templateName" placeholder="Corporate Video Production" required />
+                </label>
+                <label>
+                  Category *
+                  <select name="category" required>
+                    <option value="">Select video service category</option>
+                    <option value="Corporate Videos">Corporate Videos - Company profiles, leadership messages, internal
+                      communications</option>
+                    <option value="Marketing & Promotional Videos">Marketing & Promotional Videos - Product launches,
+                      brand campaigns, social media ads</option>
+                    <option value="Infographic & Explainer Videos">Infographic & Explainer Videos - Data-driven
+                      storytelling, animated explainers</option>
+                    <option value="Celebration & Event Videos">Celebration & Event Videos - Annual day videos, milestone
+                      celebrations, award nights</option>
+                    <option value="Training & Educational Videos">Training & Educational Videos - Employee onboarding,
+                      compliance training, e-learning</option>
+                    <option value="Product Demo Videos">Product Demo Videos - Feature walkthroughs, use-case videos,
+                      demonstrations</option>
+                    <option value="Testimonial & Case Study Videos">Testimonial & Case Study Videos - Client stories,
+                      success narratives</option>
+                    <option value="Social Media Videos">Social Media Videos - Short-form content, reels, teasers,
+                      platform-optimized</option>
+                  </select>
+                </label>
+                <label style="grid-column: 1 / -1;">
+                  Description
+                  <textarea name="description" rows="3" placeholder="Detailed description of the service"></textarea>
+                </label>
+                <label>
+                  Base Duration (minutes) *
+                  <input type="number" name="baseDuration" min="1" step="1" value="1" required />
+                </label>
+                <label>
+                  Base Rate (₹) *
+                  <input type="number" name="baseRate" min="0" step="0.01" placeholder="0.00" required />
+                </label>
+                <label>
+                  Currency
+                  <select name="currency">
+                    <option value="INR">INR</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                  </select>
+                </label>
+                <label>
+                  Default Discount (%)
+                  <input type="number" name="discount" min="0" max="100" step="0.01" value="0" />
+                </label>
+                <label>
+                  Default Tax (%)
+                  <input type="number" name="tax" min="0" max="100" step="0.01" value="0" />
+                </label>
+                <label>
+                  Status
+                  <select name="isActive">
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                  </select>
+                </label>
+
+                <!-- Template Items Section (Relational) -->
+                <div class="estimate-items-card estimate-label-full" style="grid-column: 1 / -1; margin-top: 1rem;">
+                  <div class="estimate-items-header">
+                    <h4>Template Items</h4>
+                    <button type="button" class="btn-sales-secondary btn-sales-small" id="btn-add-template-item">
+                      + Add Item
+                    </button>
+                  </div>
+                  <div id="template-items-container">
+                    <div class="estimate-items-grid template-item-row">
+                      <label>
+                        Item Description
+                        <input type="text" name="itemDescription" placeholder="Description of service item" />
+                      </label>
+                      <label>
+                        Quantity
+                        <input type="number" name="quantity" min="1" step="1" value="1" />
+                      </label>
+                      <label>
+                        Rate (₹)
+                        <input type="number" name="rate" min="0" step="0.01" value="0" />
+                      </label>
+                      <label>
+                        Discount (%)
+                        <input type="number" name="discount" min="0" max="100" step="0.01" value="0" />
+                      </label>
+                      <label>
+                        Tax (%)
+                        <input type="number" name="tax" min="0" max="100" step="0.01" value="0" />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="sales-form-actions">
+                  <button type="submit" class="btn-sales-primary">
+                    Save Template
+                  </button>
+                  <button type="button" class="btn-sales-secondary"
+                    onclick="document.getElementById('form-template').reset();">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card">
+              <div class="sales-card-header">
+                <div>
+                  <h3>All Templates</h3>
+                  <p class="muted small">
+                    Manage service templates for estimates.
+                  </p>
+                </div>
+              </div>
+              <table class="table sales-table" id="table-templates">
+                <thead>
+                  <tr>
+                    <th>Template Name</th>
+                    <th>Category</th>
+                    <th>Duration</th>
+                    <th>Base Rate</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -1312,9 +1626,6 @@
             <button class="subnav-item" data-subview="ops-tasks">
               Tasks
             </button>
-            <button class="subnav-item" data-subview="ops-assign">
-              Assignments
-            </button>
             <button class="subnav-item" data-subview="ops-individual-dash">
               Individual Dashboard
             </button>
@@ -1517,6 +1828,10 @@
                     <input type="date" name="startDate" class="task-input" />
                   </label>
                   <label class="task-label">
+                    Due Date
+                    <input type="date" name="dueDate" class="task-input" />
+                  </label>
+                  <label class="task-label">
                     Estimated Hours
                     <input type="number" name="estimate" class="task-input" min="0" step="0.5" placeholder="e.g. 8" />
                   </label>
@@ -1573,57 +1888,8 @@
                     <th>Task</th>
                     <th>Priority</th>
                     <th>Status</th>
+                    <th>Assigned To</th>
                     <th>Est. Hours</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Operations - Assign Tasks -->
-          <div id="ops-assign" class="subview two-column">
-            <div class="card">
-              <h2>Assign Tasks to Individuals</h2>
-              <form id="form-assignment" class="form-grid">
-                <label>
-                  Project
-                  <select name="projectId" id="select-assign-project" required>
-                    <option value="">Select project</option>
-                  </select>
-                </label>
-                <label>
-                  Task
-                  <select name="taskId" id="select-assign-task" required>
-                    <option value="">Select task</option>
-                  </select>
-                </label>
-                <label>
-                  Resource
-                  <select name="resourceId" id="select-assign-resource" required>
-                    <option value="">Select individual</option>
-                  </select>
-                </label>
-                <label>
-                  Due Date
-                  <input type="date" name="dueDate" required />
-                </label>
-                <button type="submit" class="btn-primary">
-                  Assign Task
-                </button>
-              </form>
-            </div>
-            <div class="card">
-              <h3>Assignments</h3>
-              <table class="table" id="table-assignments">
-                <thead>
-                  <tr>
-                    <th>Project</th>
-                    <th>Task</th>
-                    <th>Individual</th>
-                    <th>Due</th>
-                    <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -1638,16 +1904,20 @@
               <h2>Share to Designated Emails & Dashboards</h2>
               <p class="muted">
                 This simulates sending task details to the individual’s email
-                and updating their dashboard. Select an assignment and click
+                and updating their dashboard. Select a task assignment and click
                 "Share". In a real system this would connect to your email
                 server.
               </p>
               <form id="form-share" class="form-grid">
                 <label>
-                  Assignment
+                  Select Task Assignment to Share
                   <select name="assignmentId" id="select-share-assignment" required>
                     <option value="">Select assignment</option>
                   </select>
+                </label>
+                <label>
+                  Recipient Email (Optional)
+                  <input type="email" name="recipientEmail" placeholder="custom@example.com" />
                 </label>
                 <label>
                   Message (optional)
@@ -1766,45 +2036,164 @@
           </div>
         </section>
 
-        <!-- HR -->
+        <!-- HR Module -->
         <section id="view-hr" class="view">
-          <div class="card">
-            <h2>Human Resources</h2>
-            <p class="muted">
-              Snapshot based on live resources and tasks. Numbers update as
-              you add team members and assignments.
-            </p>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Metric</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody id="hr-body"></tbody>
-            </table>
+          <div class="cards-grid">
+            <div class="card kpi-card">
+              <h3>Active Employees</h3>
+              <p class="kpi-value" id="kpi-hr-employees">0</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>New Hires (Month)</h3>
+              <p class="kpi-value" id="kpi-hr-new-hires">0</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Department Headcount</h3>
+              <p class="kpi-value" id="kpi-hr-departments">0</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Retention Rate</h3>
+              <p class="kpi-value" id="kpi-hr-retention">0%</p>
+            </div>
+          </div>
+
+          <div class="two-column">
+            <div class="card">
+              <div class="sales-card-header">
+                <div>
+                  <h3>Employee Directory</h3>
+                  <p class="muted small">Manage all staff records and department assignments.</p>
+                </div>
+              </div>
+              <table class="table sales-table" id="table-hr-employees">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Department</th>
+                    <th>Join Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="hr-body"></tbody>
+              </table>
+            </div>
+
+            <div class="card">
+              <h3>Add New Employee</h3>
+              <form id="form-hr-employee" class="sales-form-grid">
+                <label class="sales-label">
+                  Full Name *
+                  <input class="sales-input" type="text" name="name" placeholder="Alice Johnson" required />
+                </label>
+                <label class="sales-label">
+                  Role *
+                  <input class="sales-input" type="text" name="role" placeholder="Senior Manager" required />
+                </label>
+                <label class="sales-label">
+                  Department
+                  <select name="department" class="sales-select" required>
+                    <option>Operations</option>
+                    <option>Marketing</option>
+                    <option>Sales</option>
+                    <option>Accounts</option>
+                    <option>Human Resources</option>
+                    <option>Client Service</option>
+                  </select>
+                </label>
+                <label class="sales-label">
+                  Join Date
+                  <input type="date" class="sales-input" name="joinDate" />
+                </label>
+                
+                <div class="sales-form-actions" style="grid-column: 1 / -1;">
+                  <button type="submit" class="btn-sales-primary">Save Employee</button>
+                  <button type="button" class="btn-sales-secondary" onclick="document.getElementById('form-hr-employee').reset();">Cancel</button>
+                </div>
+              </form>
+            </div>
           </div>
         </section>
 
-        <!-- Client Service -->
+        <!-- Client Service Module -->
         <section id="view-service" class="view">
-          <div class="card">
-            <h2>Client Service</h2>
-            <p class="muted">
-              View of workload for Client Service based on current projects,
-              tasks, and assignments in Operations.
-            </p>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Project</th>
-                  <th>Total Tasks</th>
-                  <th>Open</th>
-                  <th>Completed</th>
-                </tr>
-              </thead>
-              <tbody id="service-body"></tbody>
-            </table>
+          <div class="cards-grid">
+            <div class="card kpi-card">
+              <h3>Open Tickets</h3>
+              <p class="kpi-value" id="kpi-service-open">0</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Avg Response Time</h3>
+              <p class="kpi-value" id="kpi-service-response">0h</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>Resolved (Week)</h3>
+              <p class="kpi-value" id="kpi-service-resolved">0</p>
+            </div>
+            <div class="card kpi-card">
+              <h3>CSAT Score</h3>
+              <p class="kpi-value" id="kpi-service-csat">0%</p>
+            </div>
+          </div>
+
+          <div class="two-column">
+            <div class="card">
+              <div class="sales-card-header">
+                <div>
+                  <h3>Service Tickets</h3>
+                  <p class="muted small">Track and resolve client support requests.</p>
+                </div>
+              </div>
+              <table class="table sales-table" id="table-service-tickets">
+                <thead>
+                  <tr>
+                    <th>Ticket ID</th>
+                    <th>Customer</th>
+                    <th>Issue</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                  </tr>
+                </thead>
+                <tbody id="service-body"></tbody>
+              </table>
+            </div>
+
+            <div class="card">
+              <h3>Log New Ticket</h3>
+              <form id="form-service-ticket" class="sales-form-grid">
+                <label class="sales-label">
+                  Customer *
+                  <select name="customerId" id="select-service-customer" class="sales-select" required>
+                    <option value="">Select customer</option>
+                  </select>
+                </label>
+                <label class="sales-label">
+                  Issue Title *
+                  <input class="sales-input" type="text" name="title" placeholder="Login issue" required />
+                </label>
+                <label class="sales-label">
+                  Priority
+                  <select name="priority" class="sales-select">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                  </select>
+                </label>
+                <label class="sales-label">
+                  Status
+                  <select name="status" class="sales-select">
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                  </select>
+                </label>
+                
+                <div class="sales-form-actions" style="grid-column: 1 / -1;">
+                  <button type="submit" class="btn-sales-primary">Log Ticket</button>
+                  <button type="button" class="btn-sales-secondary" onclick="document.getElementById('form-service-ticket').reset();">Cancel</button>
+                </div>
+              </form>
+            </div>
           </div>
         </section>
       </section>

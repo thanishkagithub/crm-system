@@ -1,0 +1,30 @@
+// TEMPLATE MANAGEMENT - Add to app.js before DOMContentLoaded
+
+// Copy the contents of template-functions.js into app.js at line 2923 (before window.addEventListener)
+// This includes all the template rendering and management functions
+
+// Also add these calls to the initialRender function:
+// renderTemplates();
+
+// And add this to setupForms function:
+// setupTemplateEventListeners();
+
+// Update renderSalesCustomers function around line 980-987 to include address and GST:
+/*
+tr.innerHTML = `
+  <td>${c.name || c.customer_name || "-"}</td>
+  <td>${c.company || c.company_name || "-"}</td>
+  <td>${c.email || "-"}</td>
+  <td>${c.phone || "-"}</td>
+  <td>${c.billing_address || c.billingAddress || "-"}</td>
+  <td>${c.gst_number || c.gstNumber || "-"}</td>
+  <td>₹${(c.receivables || 0).toFixed(2)}</td>
+  <td>₹${(c.credits || 0).toFixed(2)}</td>
+`;
+*/
+
+// Update the customer form handler to include new fields:
+// In the form submission handler, add:
+// billingAddress: formData.get('billingAddress'),
+// shippingAddress: formData.get('shippingAddress'),
+// gstNumber: formData.get('gstNumber'),

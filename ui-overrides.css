@@ -1,0 +1,289 @@
+/* UI/UX Updates to Match Screenshots - Add these at the end of styles.css or create new file */
+
+/* Clean, Modern Table Styling */
+.projects-table,
+table {
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.projects-table thead,
+table thead {
+    background: #f9fafb !important;
+    color: #6b7280 !important;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.projects-table thead th,
+table thead th {
+    padding: 0.875rem 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+
+.projects-table td,
+table td {
+    padding: 0.875rem 1rem;
+    border-top: 1px solid #f3f4f6;
+    color: #1f2937;
+}
+
+.projects-table tbody tr:hover,
+table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Clean Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+select,
+textarea,
+.project-input,
+.project-textarea {
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    color: #1f2937;
+    transition: all 150ms ease-out;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus,
+.project-input:focus,
+.project-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Clean Cards */
+.card,
+.projects-table-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+}
+
+/* Modern Buttons */
+.btn-sales-primary,
+.btn-create-project,
+button[type="submit"] {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 150ms ease-out;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.btn-sales-primary:hover,
+.btn-create-project:hover,
+button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Secondary Buttons */
+.btn-sales-secondary,
+button[type="button"] {
+    background: #ffffff;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 150ms ease-out;
+}
+
+.btn-sales-secondary:hover,
+button[type="button"]:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+/* Clean Table Action Buttons */
+.table-action-btn,
+.table-button {
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 150ms ease-out;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #6b7280;
+}
+
+.table-action-btn:hover,
+.table-button:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.table-action-btn--view {
+    color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.table-action-btn--view:hover {
+    background: #eff6ff;
+}
+
+.table-action-btn--delete,
+.table-button--danger {
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+.table-action-btn--delete:hover,
+.table-button--danger:hover {
+    background: #fef2f2;
+}
+
+/* Sales Form Grid - Clean Spacing */
+.sales-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.sales-form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* Estimate Form Specific */
+.estimate-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.estimate-label-full {
+    grid-column: 1 / -1;
+}
+
+/* Clean Status Pills */
+.status-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pill--pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-pill--inprogress {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-pill--completed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+/* Clean Header */
+.header {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.header-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* Clean Navigation */
+.nav-item {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 150ms ease-out;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.nav-item:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Clean Subnav */
+.subnav-item {
+    padding: 0.625rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 150ms ease-out;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.subnav-item:hover {
+    background: #f9fafb;
+    color: #111827;
+}
+
+.subnav-item.subnav-active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Cleaner Content Area */
+.content {
+    background: #f9fafb;
+    padding: 1.5rem;
+}
+
+/* Sales Subview Active */
+.sales-subview-active {
+    display: block !important;
+}
