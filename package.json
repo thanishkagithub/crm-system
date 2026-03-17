@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Unified CRM Application - Frontend & Serverless Backend",
   "main": "index.html",
+  "scripts": {
+    "start": "node backend/server.js & npx http-server . -p 8080",
+    "server": "node backend/server.js",
+    "client": "npx http-server . -p 8080"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

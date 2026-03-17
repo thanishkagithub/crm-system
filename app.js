@@ -73,7 +73,8 @@ async function apiRequest(endpoint, options = {}) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `API Error: ${response.statusText}`);
+      const errorMessage = errorData.message || errorData.error || `API Error: ${response.statusText}`;
+      throw new Error(errorMessage);
     }
 
     // specific check for 204 No Content

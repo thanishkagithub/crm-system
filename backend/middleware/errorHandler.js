@@ -21,9 +21,11 @@ const errorHandler = (err, req, res, next) => {
     }
 
     // Default error
+    const message = err.message || 'Internal Server Error';
     res.status(err.status || 500).json({
         success: false,
-        error: err.message || 'Internal Server Error',
+        error: message,
+        message: message,
         ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
     });
 };
