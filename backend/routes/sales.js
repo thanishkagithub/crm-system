@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
-const fs = require('fs');
-const path = require('path');
 
-const logFile = path.join(__dirname, '../debug.log');
+// Use console.log for logging (fs.appendFileSync is not safe on serverless/Netlify read-only FS)
 const log = (msg) => {
-    const timestamp = new Date().toISOString();
-    fs.appendFileSync(logFile, `[${timestamp}] ${msg}\n`);
+    console.log(`[sales] ${msg}`);
 };
 
 // Generic helper for CRUD operations
